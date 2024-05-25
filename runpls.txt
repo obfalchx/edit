@@ -1,0 +1,34 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obfchx/Red-Hub/main/VuDepTrai.lua"))()
+
+local nung = Instance.new("ScreenGui")
+local gay = Instance.new("TextButton")
+local sex = Instance.new("UICorner")
+local sexgay = Instance.new("ImageLabel")
+sex.Name = "sex"
+sex.Parent = gay
+sexgay.Name = "sexgay"
+sexgay.Parent = gay
+sexgay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+sexgay.BackgroundTransparency = 1.000
+sexgay.BorderSizePixel = 0
+sexgay.Position = UDim2.new(0.234619886, 0, 0.239034846, 0)
+sexgay.Size = UDim2.new(0, 30, 0, 30)
+sexgay.Image = "rbxassetid://17358087763"
+nung.Name = "nung"
+nung.Parent = game.CoreGui
+nung.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gay.Name = "gay"
+gay.Parent = nung
+gay.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+gay.BackgroundTransparency = 0.1
+gay.BorderSizePixel = 0
+gay.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+gay.Size = UDim2.new(0, 55, 0, 55)
+gay.Font = Enum.Font.SourceSans
+gay.Text = ""
+gay.TextColor3 = Color3.fromRGB(153, 51, 255)
+gay.TextSize = 20.000
+gay.Draggable = true
+gay.MouseButton1Click:Connect(function()
+    Window:Minimize()
+end)
