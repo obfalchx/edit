@@ -475,6 +475,7 @@ spawn(function()
                     if doughKing then
                         topos(doughKing.HumanoidRootPart.CFrame * CFrame.new(5, 10, 7))
                     else
+                    wait(4)
                         loadstring(game:HttpGet("https://raw.githubusercontent.com/obfalchx/edit/refs/heads/main/Dough_King.txt"))()
                     end
                 end
