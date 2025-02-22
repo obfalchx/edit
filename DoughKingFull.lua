@@ -1,3 +1,5 @@
+setclipboard("https://discord.com/invite/hcJ8PHtkfy")
+
 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetTeam", "Marines")
 
 game:GetService("ReplicatedStorage"):WaitForChild("__ServerBrowser"):InvokeServer("getjob")
