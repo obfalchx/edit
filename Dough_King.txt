@@ -1,5 +1,5 @@
 getgenv().DoughKing = function()
-    local url = 'https://andepzaihub.onrender.com/api/status'
+    local url = 'https://piphuc273.vercel.app/doughking'
     local chooses
     local foundServers = game:GetService('HttpService'):JSONDecode(game:HttpGet(url))
     for i,v in foundServers do 
