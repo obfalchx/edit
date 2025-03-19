@@ -1,0 +1,150 @@
+local AutoFarm = {}
+
+AutoFarm.Settings = {
+    Level = false,
+    Auto_CFrame = true,
+    PosLv = CFrame.new(0, 25, 0),
+    SelectWeapon = nil
+}
+
+local SetCFarme = 1
+
+function AutoFarm.Start()
+    spawn(function()
+        while wait() do
+            local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+            local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+            pcall(function()
+                if AutoFarm.Settings.Level then
+                    if QuestC.Visible == true then
+                        local QuestTitle = QuestC.Container.QuestTitle.Title.Text
+                        if not string.find(QuestTitle, QuestCheck()[6]) then
+                            StartMagnetLv = false
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                            wait(0.5)
+                            topos(QuestCheck()[2])
+                            if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+                                wait(0.2)
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+                                wait(0.2)
+                                topos(QuestCheck()[7][1] * AutoFarm.Settings.PosLv)
+                            end
+                        elseif game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+                            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == QuestCheck()[3] then
+                                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                        repeat
+                                            task.wait()
+                                            if AutoFarm.Settings.Auto_CFrame then
+                                                SetCFarme = 1
+                                            end
+                                            PosMon = v.HumanoidRootPart.CFrame
+                                            v.HumanoidRootPart.CanCollide = false
+                                            v.Humanoid.WalkSpeed = 0
+                                            v.Head.CanCollide = false
+                                            StartMagnetLv = true
+                                            EquipWeapon(AutoFarm.Settings.SelectWeapon)
+                                            v.HumanoidRootPart.Transparency = 1
+                                            TP2(v.HumanoidRootPart.CFrame * Pos)
+                                        until not AutoFarm.Settings.Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+                                    end
+                                end
+                            end
+                        else
+                            if AutoFarm.Settings.Auto_CFrame then
+                                topos(QuestCheck()[7][SetCFarme] * AutoFarm.Settings.PosLv)
+                                if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+                                    if SetCFarme == nil or SetCFarme == "" then
+                                        SetCFarme = 1
+                                    elseif SetCFarme >= #QuestCheck()[7] then
+                                        SetCFarme = 1
+                                    end
+                                    SetCFarme = SetCFarme + 1
+                                    wait(0.5)
+                                end
+                            end
+                        end
+                    else
+                        topos(QuestCheck()[2])
+                        if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+                            StartMagnetLv = false
+                            wait(0.2)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+                            wait(0.2)
+                            topos(QuestCheck()[7][1] * AutoFarm.Settings.PosLv)
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end
+
+return AutoFarm
+
+local EliteHunter = {}
+
+EliteHunter.Settings = {
+    Enabled = false,
+    HopEnabled = false,
+    SelectWeapon = nil
+}
+
+function EliteHunter.Toggle(state)
+    EliteHunter.Settings.Enabled = state
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+    StopTween(EliteHunter.Settings.Enabled)
+    if state then
+        EliteHunter.Start()
+    end
+end
+
+function EliteHunter.Start()
+    spawn(function()
+        while wait() do
+            if EliteHunter.Settings.Enabled and World3 then
+                pcall(function()
+                    local QuestGui = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+                    if QuestGui.Visible then
+                        local QuestTitle = QuestGui.Container.QuestTitle.Title.Text
+                        if string.find(QuestTitle, "Diablo") or string.find(QuestTitle, "Deandre") or string.find(QuestTitle, "Urban") then
+                            local Enemies = game:GetService("Workspace").Enemies
+                            if Enemies:FindFirstChild("Diablo") or Enemies:FindFirstChild("Deandre") or Enemies:FindFirstChild("Urban") then
+                                for _, v in pairs(Enemies:GetChildren()) do
+                                    if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
+                                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                            repeat
+                                                wait()
+                                                EquipWeapon(EliteHunter.Settings.SelectWeapon)
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Humanoid.WalkSpeed = 0
+                                                TP2(v.HumanoidRootPart.CFrame * CFrame.new(PosX, PosY, PosZ))
+                                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                                            until not EliteHunter.Settings.Enabled or v.Humanoid.Health <= 0 or not v.Parent
+                                        end
+                                    end
+                                end
+                            else
+                                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                                if ReplicatedStorage:FindFirstChild("Diablo") then
+                                    topos(ReplicatedStorage:FindFirstChild("Diablo").HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                                elseif ReplicatedStorage:FindFirstChild("Deandre") then
+                                    topos(ReplicatedStorage:FindFirstChild("Deandre").HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                                elseif ReplicatedStorage:FindFirstChild("Urban") then
+                                    topos(ReplicatedStorage:FindFirstChild("Urban").HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                                end
+                            end
+                        end
+                    else
+                        local Response = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
+                        if EliteHunter.Settings.HopEnabled and Response == "I don't have anything for you right now. Come back later." then
+                            hop()
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+end
+
+return EliteHunter
