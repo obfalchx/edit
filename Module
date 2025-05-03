@@ -1,83 +1,61 @@
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
 local placeId = game.PlaceId
 local jobId = game.JobId
-local player = Players.LocalPlayer
 
 local sea1 = 2753915549
 local sea2 = 4442272183
 local sea3 = 7449423635
 
-local CheckSea
-if placeId == sea1 then
-    CheckSea = "Sea 1"
-elseif placeId == sea2 then
-    CheckSea = "Sea 2"
-elseif placeId == sea3 then
-    CheckSea = "Sea 3"
-else
-    CheckSea = "unknown sea"
-end
+local CheckSea = placeId == sea1 and "Sea 1" or placeId == sea2 and "Sea 2" or placeId == sea3 and "Sea 3" or "unknown sea"
 
-local function sendWebhook()
-    local Data = {
-        ["embeds"] = {{
-            ["title"] = "Information | Account",
-            ["url"] = "https://www.roblox.com/users/"..player.UserId,
-            ["description"] = "```"..player.DisplayName.." ```",
-            ["color"] = tonumber(""),
-            ["thumbnail"] = {
-                ["url"] = "https://cdn.discordapp.com/attachments/1277112182743629969/1277337544463224898/Picsart_24-08-26_01-42-34-420.png"
-            },
-            ["fields"] = {
-                {
-                    ["name"] = "Sea:",
-                    ["value"] = "```" .. CheckSea.."```", 
-                    ["inline"] = true
-                },
-                {                
-                    ["name"] = "Job ID:",
-                    ["value"] = " " .. jobId,
-                    ["inline"] = true
-                },
-                {
-                    ["name"] = "Script Teleport:",
-                    ["value"] = "\n" .. 'game:GetService("TeleportService"):TeleportToPlaceInstance('..placeId..', "'..jobId..'", game.Players.LocalPlayer)' .. "\n", 
-                    ["inline"] = true 
-                }
-            }              
-        }}
-    }
-
-    local Headers = {["Content-Type"] = "application/json"}
-    local Encoded = HttpService:JSONEncode(Data)
-    local Request = http_request or request or HttpPost or syn.request
-
-    local Final = {
-        Url = "https://discord.com/api/webhooks/1368283862488055969/1Ikam3E7H_Gi4yYZVnwjvICapeZFOveGQbsc1lGE_StVwx-eI6QHslQVPIc8XQIeNxfA",
-        Body = Encoded,
-        Method = "POST",
-        Headers = Headers
-    }
-
-    Request(Final)
-end
-
-local sent = false
-
-while true do
-    task.wait(2)
-    local enemies = game:GetService("Workspace"):FindFirstChild("Enemies")
-    if enemies then
-        local boss = enemies:FindFirstChild("DarkBeard")
-        if boss and not sent then
-            sendWebhook()
+spawn(function()
+    local sent = false
+    while true do
+        task.wait(2)
+        if game:GetService("Workspace"):FindFirstChild("Enemies"):FindFirstChild("DarkBeard") and not sent then
+            local Data = {
+                ["embeds"] = {{
+                    ["title"] = "Notify",
+                    ["description"] = "**[Discord Notify](https://discord.com/invite/hcJ8PHtkfy)**\n",
+                    ["color"] = 16711680,
+                    ["thumbnail"] = {
+                        ["url"] = "https://cdn.discordapp.com/attachments/1277112182743629969/1277337544463224898/Picsart_24-08-26_01-42-34-420.png"
+                    },
+                    ["fields"] = {
+                        {
+                            ["name"] = "Name:",
+                            ["value"] = "```DarkBeard```", 
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Sea:",
+                            ["value"] = "```" .. CheckSea.."```", 
+                            ["inline"] = true
+                        },
+                        {                
+                            ["name"] = "Job ID:",
+                            ["value"] = " " .. jobId,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Script Teleport:",
+                            ["value"] = "\n" .. 'game:GetService("TeleportService"):TeleportToPlaceInstance('..placeId..', "'..jobId..'", game.Players.LocalPlayer)' .. "\n", 
+                            ["inline"] = true 
+                        }
+                    }              
+                }}
+            }
+            local Headers = {["Content-Type"] = "application/json"}
+            local Encoded = game:GetService("HttpService"):JSONEncode(Data)
+            local Request = http_request or request or HttpPost or syn.request
+            local Final = {
+                Url = "https://discord.com/api/webhooks/1368283862488055969/1Ikam3E7H_Gi4yYZVnwjvICapeZFOveGQbsc1lGE_StVwx-eI6QHslQVPIc8XQIeNxfA",Body = Encoded,Method = "POST",Headers = Headers}
+            Request(Final)
             sent = true
-        elseif not boss then
+        elseif not game:GetService("Workspace"):FindFirstChild("Enemies"):FindFirstChild("DarkBeard") then
             sent = false
         end
     end
-end
+end)
 
 local SendDarkBeard = false;
 
