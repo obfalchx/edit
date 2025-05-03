@@ -2,29 +2,26 @@ local SendDarkBeard = false;
 
 spawn(function()
     while wait(0.2) do
-        if World2 then
-            if game:GetService("Workspace").Enemies:FindFirstChild("DarkBeard") and not SendDarkBeard then
-                local jobId = tostring(game.JobId)
-                local Config = {
-                    URL = "https://discord.com/api/webhooks/1368283862488055969/1Ikam3E7H_Gi4yYZVnwjvICapeZFOveGQbsc1lGE_StVwx-eI6QHslQVPIc8XQIeNxfA",
-                    Title = "Dark Beard Finder",
-                    Description = "Make sure it matches the sea listed!",
-                    Content = {
-                        {
-                            Name = "Dark Beard Status",
-                            Value = "Spawn!",
-                            Inline = false
-                        },
-                        {
-                            Name = "[Server JobId]",
-                            Value = jobId,
-                            Inline = false
-                        }
+        if game:GetService("Workspace").Enemies:FindFirstChild("DarkBeard") and not SendDarkBeard then
+            local jobId = tostring(game.JobId)
+            local Config = {
+                URL = "https://discord.com/api/webhooks/1368283862488055969/1Ikam3E7H_Gi4yYZVnwjvICapeZFOveGQbsc1lGE_StVwx-eI6QHslQVPIc8XQIeNxfA",
+                Title = "Dark Beard Finder",
+                Content = {
+                    {
+                        Name = "Dark Beard Status",
+                        Value = "Spawn!",
+                        Inline = false
+                    },
+                    {
+                        Name = "[Server JobId]",
+                        Value = jobId,
+                        Inline = false
                     }
                 }
-                Webhook:Send(Config)
-                SendDarkBeard = true
-            end
+            }
+            Webhook:Send(Config)
+            SendDarkBeard = true
         end
     end
 end)
