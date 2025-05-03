@@ -1,1 +1,32 @@
+local SendDarkBeard = false;
+
+spawn(function()
+    while wait(0.2) do
+        if World2 then
+            if game:GetService("Workspace").Enemies:FindFirstChild("DarkBeard") and not SendDarkBeard then
+                local jobId = tostring(game.JobId)
+                local Config = {
+                    URL = "https://discord.com/api/webhooks/1368283862488055969/1Ikam3E7H_Gi4yYZVnwjvICapeZFOveGQbsc1lGE_StVwx-eI6QHslQVPIc8XQIeNxfA",
+                    Title = "Dark Beard Finder",
+                    Description = "Make sure it matches the sea listed!",
+                    Content = {
+                        {
+                            Name = "Dark Beard Status",
+                            Value = "Spawn!",
+                            Inline = false
+                        },
+                        {
+                            Name = "[Server JobId]",
+                            Value = jobId,
+                            Inline = false
+                        }
+                    }
+                }
+                Webhook:Send(Config)
+                SendDarkBeard = true
+            end
+        end
+    end
+end)
+
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death),function() end);hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn),function() end);hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end);spawn(function() for v1,v2 in pairs(game:GetDescendants()) do if v2:IsA("Texture") then v2.Texture="";elseif (v2:IsA("BasePart") and (v2.Material==Enum.Material.Water)) then v2.Material=Enum.Material.SmoothPlastic;end end for v3,v4 in pairs(game.Players.LocalPlayer.PlayerScripts:GetDescendants()) do local v5={"WaterBlur","WaterEffect","WaterColorCorrection","WaterCFrame","MirageFog"};if table.find(v5,v4.Name) then v4:Destroy();end end end);local v0=loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Setting/refs/heads/main/hifast"))();spawn(function() while wait() do v0.mmb();end end);
