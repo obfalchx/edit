@@ -9,60 +9,31 @@ if game.PlaceId == 7449423635 then
         ["http://www.roblox.com/asset/?id=9709149855"] = 7,
         ["http://www.roblox.com/asset/?id=9709149431"] = 8
     }
-
-    local HttpService = game:GetService("HttpService")
-    local Lighting = game:GetService("Lighting")
-    local Players = game:GetService("Players")
-    local currentTexture = Lighting.Sky.MoonTextureId
-    local currentPhase = moonPhases[currentTexture] or 1
+    local Lighting, Players, HttpService = game:GetService("Lighting"), game:GetService("Players"), game:GetService("HttpService")
+    local currentPhase = moonPhases[Lighting.Sky.MoonTextureId] or 1
     local minutesLeft = math.floor((8 - currentPhase) * 7.5)
-    local playerCount = #Players:GetPlayers()
-
     if minutesLeft < 10 then
-        local WebhookurlFM = "https://discord.com/api/webhooks/1369552835720773664/sjCSuiG_m-KhVfRX6EywnxK5Cupft924jbNVaL3VqDnt3IphQF1A4jZBwiPMP1CdSZyQ"
-
         local Data = {
-            ["embeds"]= {
-                {
-                    ["title"]= "Full Moon Notify",
-                    ["color"]= tonumber(0x7269da),
-                    ["fields"]= {
-                        {
-                            ["name"]= "⏳ **Status:**",
-                            ["value"]= "`"..minutesLeft.." Minute(s)`",
-                            ["inline"]= true
-                        },
-                        {
-                            ["name"]= "**[🌗] __Moon Phase:__**",
-                            ["value"]= "**"..currentPhase.."/8**",
-                            ["inline"]= true
-                        },
-                        {
-                            ["name"]= "Players Count",
-                            ["value"]= "```"..playerCount.."/12```",
-                            ["inline"]= true
-                        },
-                        {
-                            ["name"]= "Job Id",
-                            ["value"]= ""..game.JobId.."",
-                            ["inline"]= true
-                        },
-                        {
-                            ["name"]= "Script Job Id",
-                            ["value"]= 'game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", game.Players.LocalPlayer)',
-                            ["inline"]= false
-                        }
+            embeds = {{
+                title = "Notify Full Moon",
+                color = 0x7269da,
+                fields = {
+                    {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
+                    {name = "Job Id", value = game.JobId, inline = true},
+                    {
+                        name = "Script Job Id",
+                        value = 'game:GetService("TeleportService"):TeleportToPlaceInstance(' .. game.PlaceId .. ', "' .. game.JobId .. '", game.Players.LocalPlayer)',
+                        inline = false
                     }
                 }
-            }
+            }}
         }
-
-        local Headers = {["Content-Type"] = "application/json"}
-        local Encoded = HttpService:JSONEncode(Data)
-
-        local Request = http_request or request or HttpPost or syn.request
-        local Final1 = {Url = WebhookurlFM , Body = Encoded, Method = "POST", Headers = Headers}
-        Request(Final1)
+        (http_request or request or HttpPost or syn.request)({
+            Url = "https://discord.com/api/webhooks/1369562971893661716/i-qRbRYazMMspY84oRx2sGgOwu9Kte7W5yif5Ypa3G82WFTpxdpLEd2Pt2od-I4CVcKF",
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = HttpService:JSONEncode(Data)
+        })
     end
 end
 
