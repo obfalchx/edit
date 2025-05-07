@@ -9,13 +9,15 @@ if game.PlaceId == 7449423635 then
         ["http://www.roblox.com/asset/?id=9709149855"] = 7,
         ["http://www.roblox.com/asset/?id=9709149431"] = 8
     }
-    local Lighting, Players, HttpService = game:GetService("Lighting"), game:GetService("Players"), game:GetService("HttpService")
+    local Lighting = game:GetService("Lighting")
+    local Players = game:GetService("Players")
+    local HttpService = game:GetService("HttpService")
     local currentPhase = moonPhases[Lighting.Sky.MoonTextureId] or 1
     local minutesLeft = math.floor((8 - currentPhase) * 7.5)
     if minutesLeft < 10 then
         local Data = {
             embeds = {{
-                title = "Notify Full Moon",
+                title = "Full Moon Notify",
                 color = FF0022,
                 fields = {
                     {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
@@ -28,6 +30,26 @@ if game.PlaceId == 7449423635 then
             Method = "POST",
             Headers = {["Content-Type"] = "application/json"},
             Body = HttpService:JSONEncode(Data)
+        })
+    end
+    
+    local Locations = game.Workspace:WaitForChild("_WorldOrigin"):WaitForChild("Locations")
+    if Locations:FindFirstChild("Mirage Island") then
+        local MirageData = {
+            embeds = {{
+                title = "Mirage Notify",
+                color = 0x00FF00,
+                fields = {
+                    {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
+                    {name = "Job Id", value = "```" .. game.JobId .. "```", inline = true},
+                }
+            }}
+        }
+        (http_request or request or HttpPost or syn.request)({
+            Url = "https://discord.com/api/webhooks/1369562971893661716/i-qRbRYazMMspY84oRx2sGgOwu9Kte7W5yif5Ypa3G82WFTpxdpLEd2Pt2od-I4CVcKF",
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = HttpService:JSONEncode(MirageData)
         })
     end
 end
