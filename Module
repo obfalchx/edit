@@ -16,15 +16,10 @@ if game.PlaceId == 7449423635 then
         local Data = {
             embeds = {{
                 title = "Notify Full Moon",
-                color = 0x7269da,
+                color = FF0022,
                 fields = {
                     {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
-                    {name = "Job Id", value = game.JobId, inline = true},
-                    {
-                        name = "Script Job Id",
-                        value = 'game:GetService("TeleportService"):TeleportToPlaceInstance(' .. game.PlaceId .. ', "' .. game.JobId .. '", game.Players.LocalPlayer)',
-                        inline = false
-                    }
+                    {name = "Job Id", value = "```" .. game.JobId .. "```", inline = true},
                 }
             }}
         }
