@@ -1,3 +1,12 @@
+--Cần Webhook Ib t cho cần gì phải mò cực z
+
+local seas = {
+    [sea1] = "Sea 1",
+    [sea2] = "Sea 2",
+    [sea3] = "Sea 3"
+}
+local CheckSea = seas[placeId] or "unknown sea"
+
 if game.PlaceId == 7449423635 then
     local moonPhases = {
         ["http://www.roblox.com/asset/?id=9709149409"] = 1,
@@ -9,12 +18,13 @@ if game.PlaceId == 7449423635 then
         ["http://www.roblox.com/asset/?id=9709149855"] = 7,
         ["http://www.roblox.com/asset/?id=9709149431"] = 8
     }
+
     local Lighting = game:GetService("Lighting")
-    local Players = game:GetService("Players")
-    local HttpService = game:GetService("HttpService")
     local currentPhase = moonPhases[Lighting.Sky.MoonTextureId] or 1
     local minutesLeft = math.floor((8 - currentPhase) * 7.5)
     if minutesLeft < 10 then
+        local Players = game:GetService("Players")
+        local HttpService = game:GetService("HttpService")
         local Data = {
             embeds = {{
                 title = "Full Moon Notify",
@@ -22,6 +32,7 @@ if game.PlaceId == 7449423635 then
                 fields = {
                     {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
                     {name = "Job Id", value = "```" .. game.JobId .. "```", inline = true},
+                    {name = "World", value = "```" .. CheckSea .. "```", inline = true},
                 }
             }}
         }
@@ -30,26 +41,6 @@ if game.PlaceId == 7449423635 then
             Method = "POST",
             Headers = {["Content-Type"] = "application/json"},
             Body = HttpService:JSONEncode(Data)
-        })
-    end
-    
-    local Locations = game.Workspace:WaitForChild("_WorldOrigin"):WaitForChild("Locations")
-    if Locations:FindFirstChild("Mirage Island") then
-        local MirageData = {
-            embeds = {{
-                title = "Mirage Notify",
-                color = 0x00FF00,
-                fields = {
-                    {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
-                    {name = "Job Id", value = "```" .. game.JobId .. "```", inline = true},
-                }
-            }}
-        }
-        (http_request or request or HttpPost or syn.request)({
-            Url = "https://discord.com/api/webhooks/1369562971893661716/i-qRbRYazMMspY84oRx2sGgOwu9Kte7W5yif5Ypa3G82WFTpxdpLEd2Pt2od-I4CVcKF",
-            Method = "POST",
-            Headers = {["Content-Type"] = "application/json"},
-            Body = HttpService:JSONEncode(MirageData)
         })
     end
 end
