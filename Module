@@ -1,52 +1,61 @@
--- Cần Webhook Ib t cho cần gì phải mò cực z
+setclipboard("https://discord.com/invite/hcJ8PHtkfy")
 
-local sea1 = 2753915549
-local sea2 = 4442272183
-local sea3 = 7449423635
+local Blur = Instance.new("BlurEffect")
+Blur.Size = 100
+Blur.Enabled = true
+Blur.Parent = game.Lighting
 
-local seas = {
-    [sea1] = "Sea 1",
-    [sea2] = "Sea 2",
-    [sea3] = "Sea 3"
-}
-local CheckSea = seas[placeId] or "unknown sea"
+if not game.CoreGui:FindFirstChild("ThunderScreen") then
+    local ThunderScreen = Instance.new("ScreenGui")
+    local ThunderToggleUI = Instance.new("TextButton")
+    local ThunderCornerUI = Instance.new("UICorner")
+    local ThunderImageUI = Instance.new("ImageLabel")
+    local TestLabelEN = Instance.new("TextLabel")
+    local TestLabelVN = Instance.new("TextLabel")
 
-if game.PlaceId == 7449423635 then
-    local moonPhases = {
-        ["http://www.roblox.com/asset/?id=9709149409"] = 1,
-        ["http://www.roblox.com/asset/?id=9709149485"] = 2,
-        ["http://www.roblox.com/asset/?id=9709149570"] = 3,
-        ["http://www.roblox.com/asset/?id=9709149637"] = 4,
-        ["http://www.roblox.com/asset/?id=9709149706"] = 5,
-        ["http://www.roblox.com/asset/?id=9709149777"] = 6,
-        ["http://www.roblox.com/asset/?id=9709149855"] = 7,
-        ["http://www.roblox.com/asset/?id=9709149431"] = 8
-    }
+    ThunderScreen.Name = "Copy Discord Link (New Link)"
+    ThunderScreen.Parent = game.CoreGui
+    ThunderScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-    local Lighting = game:GetService("Lighting")
-    local currentPhase = moonPhases[Lighting.Sky.MoonTextureId] or 1
-    local minutesLeft = math.floor((8 - currentPhase) * 7.5)
-    if minutesLeft < 10 then
-        local Players = game:GetService("Players")
-        local HttpService = game:GetService("HttpService")
-        local Data = {
-            embeds = {{
-                title = "Full Moon Notify",
-                color = FF0022,
-                fields = {
-                    {name = "Players Count", value = "```" .. #Players:GetPlayers() .. "```", inline = true},
-                    {name = "Job Id", value = "```" .. game.JobId .. "```", inline = true},
-                    {name = "World", value = "```" .. CheckSea .. "```", inline = true},
-                }
-            }}
-        }
-        (http_request or request or HttpPost or syn.request)({
-            Url = "https://discord.com/api/webhooks/1369562971893661716/i-qRbRYazMMspY84oRx2sGgOwu9Kte7W5yif5Ypa3G82WFTpxdpLEd2Pt2od-I4CVcKF",
-            Method = "POST",
-            Headers = {["Content-Type"] = "application/json"},
-            Body = HttpService:JSONEncode(Data)
-        })
-    end
+    ThunderToggleUI.Name = "ThunderToggleUI"
+    ThunderToggleUI.Parent = ThunderScreen
+    ThunderToggleUI.BackgroundColor3 = Color3.fromRGB(244, 244, 0)
+    ThunderToggleUI.Position = UDim2.new(0.5, -75, 0.0952890813, 0)  -- Đã căn giữa
+    ThunderToggleUI.Size = UDim2.new(0, 150, 0, 30)
+    ThunderToggleUI.Font = Enum.Font.SourceSansSemibold
+    ThunderToggleUI.Text = "Copy Discord Link"
+    ThunderToggleUI.TextColor3 = Color3.fromRGB(0, 0, 0)
+    ThunderToggleUI.TextSize = 19
+    ThunderToggleUI.Draggable = true
+
+    TestLabelEN.Name = "TestLabelEN"
+    TestLabelEN.Parent = ThunderScreen
+    TestLabelEN.BackgroundTransparency = 1
+    TestLabelEN.Size = UDim2.new(0, 200, 0, 50)
+    TestLabelEN.Position = UDim2.new(0.5, -100, 0.4, -25)
+    TestLabelEN.Font = Enum.Font.SourceSansBold
+    TestLabelEN.Text = "English: Script Down Join Discord To Get New Scripts"
+    TestLabelEN.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TestLabelEN.TextSize = 30
+
+    TestLabelVN.Name = "TestLabelVN"
+    TestLabelVN.Parent = ThunderScreen
+    TestLabelVN.BackgroundTransparency = 1
+    TestLabelVN.Size = UDim2.new(0, 200, 0, 50)
+    TestLabelVN.Position = UDim2.new(0.5, -100, 0.5, -25)
+    TestLabelVN.Font = Enum.Font.SourceSansBold
+    TestLabelVN.Text = "Việt: Script Đã Lỗi Thời Vui Lòng Vào Discord Để Nhận Script Mới"
+    TestLabelVN.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TestLabelVN.TextSize = 30
+
+    ThunderToggleUI.MouseButton1Click:Connect(function()
+        setclipboard("https://discord.com/invite/hcJ8PHtkfy")
+    end)
 end
 
-hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death),function() end);hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn),function() end);hookfunction(require(game:GetService("ReplicatedStorage"):WaitForChild("GuideModule")).ChangeDisplayedNPC,function() end);spawn(function() for v0,v1 in pairs(game:GetDescendants()) do if v1:IsA("Texture") then v1.Texture="";elseif (v1:IsA("BasePart") and (v1.Material==Enum.Material.Water)) then v1.Material=Enum.Material.SmoothPlastic;end end for v2,v3 in pairs(game.Players.LocalPlayer.PlayerScripts:GetDescendants()) do local v4={"WaterBlur","WaterEffect","WaterColorCorrection","WaterCFrame","MirageFog"};if table.find(v4,v3.Name) then v3:Destroy();end end end);loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Setting/refs/heads/main/Fast.module"))();
+repeat wait() until game:IsLoaded()
+wait()
+
+for _, v in next, getconnections(game:GetService("Players").LocalPlayer.Idled) do
+    v:Disable()
+end
